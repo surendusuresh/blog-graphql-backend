@@ -8,15 +8,8 @@ module.exports = {
       }
       const post = await postModel.findById({ _id: id }).exec();
       return post;
-    },
-    myPosts: async (parent, args, { models: { postModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError("You are not authenticated");
-      }
-      const posts = await postModel.find({ author: me.id }).exec();
-      return posts;
-    },
-    allPosts: async (parent, args, { models: { postModel }, me }, info) => {
+    }, 
+    allPosts: async (parent, args, { models: { postModel } }, info) => {
       const posts = await postModel.find().exec();
       return posts;
     },
