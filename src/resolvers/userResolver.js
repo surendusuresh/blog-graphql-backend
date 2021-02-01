@@ -48,6 +48,16 @@ module.exports = {
       const user = await userModel.create({ name, email, password });
       return user;
     },
+    editUser: async (parent, { id, input }, {models: { userModel }, me}, info ) => {      
+      if(!me) {
+        throw new AuthenticationError("You are not authenticated");
+      }      
+      let user = await userModel.findOneAndUpdate({ _id: id }, { ...input }, {new: true}) 
+      if(!user){
+        throw new Error("Failed to update the user")        
+      }     
+      return user            
+    },
   },
   User: {
     posts: async ({ id }, args, { models: { postModel } }, info) => {

@@ -11,6 +11,11 @@ module.exports = gql`
   type Token {
     token: String!
   }
+  
+  input UserInput {
+    name: String    
+    password: String
+  }
 
   extend type Query {
     user(id: ID!): User!
@@ -19,6 +24,7 @@ module.exports = gql`
 
   extend type Mutation {
     createUser(name: String!, email: String!, password: String!): User!
+    editUser(id:ID!, input: UserInput): User!
   }
 `;
 

@@ -1,10 +1,10 @@
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,    
+    required: true,
   },
   email: {
     type: String,
@@ -17,11 +17,23 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre('save', function() {
+userSchema.pre("save", function () {
   const hashedPassword = bcrypt.hashSync(this.password, 12);
   this.password = hashedPassword;
 });
 
-const user = mongoose.model('user', userSchema);
+userSchema.pre("findOneAndUpdate", function () {  
+  const password = this.getUpdate().password;  
+  try {
+    const hashedPassword = bcrypt.hashSync(password, 12);
+    console.log(hashedPassword)
+    this.getUpdate().password = hashedPassword;    
+  }
+  catch(error){
+    
+  }
+});
+
+const user = mongoose.model("user", userSchema);
 
 module.exports = user;
