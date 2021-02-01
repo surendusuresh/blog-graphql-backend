@@ -13,11 +13,11 @@ module.exports = {
     },
     login: async (
       parent,
-      { name, password },
+      { email, password },
       { models: { userModel } },
       info
     ) => {
-      const user = await userModel.findOne({ name }).exec();
+      const user = await userModel.findOne({ email }).exec();
 
       if (!user) {
         throw new AuthenticationError("Invalid credentials");
@@ -41,18 +41,12 @@ module.exports = {
   Mutation: {
     createUser: async (
       parent,
-      { name, password },
+      { name, email, password },
       { models: { userModel } },
       info
     ) => {
-      const user = await userModel.create({ name, password });
+      const user = await userModel.create({ name, email, password });
       return user;
-    },
-  },
-  User: {
-    posts: async ({ id }, args, { models: { postModel } }, info) => {
-      const posts = await postModel.find({ author: id }).exec();
-      return posts;
     },
   },
 };

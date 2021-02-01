@@ -4,6 +4,7 @@ module.exports = gql`
   type User {
     id: ID!
     name: String!
+    email: String!
     posts: [Post!]!
   }
 
@@ -13,11 +14,11 @@ module.exports = gql`
 
   extend type Query {
     user(id: ID!): User!
-    login(name: String!, password: String!): Token!
+    login(email: String!, password: String!): Token!
   }
 
   extend type Mutation {
-    createUser(name: String!, password: String!): User!
+    createUser(name: String!, email: String!, password: String!): User!
   }
 `;
 

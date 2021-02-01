@@ -31,6 +31,7 @@ const getUser = async (req) => {
 const server = new ApolloServer({
   typeDefs: schemas,
   resolvers,
+  playground: process.env.NODE_ENV === 'production' ? false : true,
   context: async ({ req }) => {
     if (req) {
       const me = await getUser(req);
@@ -56,5 +57,6 @@ app.listen(process.env.PORT, () => {
     keepAlive: 120,
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   });
 });

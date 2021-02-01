@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,    
+  },
+  email: {
+    type: String,
     required: true,
     unique: true,
   },
@@ -11,12 +15,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  posts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'post',
-    },
-  ],
 });
 
 userSchema.pre('save', function() {
