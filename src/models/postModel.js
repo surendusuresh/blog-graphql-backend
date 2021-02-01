@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timestamps = require('mongoose-timestamp');
 
 const postSchema = new mongoose.Schema({
   title: {
@@ -24,8 +25,12 @@ const postSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-  },
+  },  
 });
+
+postSchema.plugin(timestamps);
+
+postSchema.index({ createdAt: 1, updatedAt: 1 });
 
 const post = mongoose.model('post', postSchema);
 

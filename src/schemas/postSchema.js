@@ -9,6 +9,7 @@ module.exports = gql`
     tags: String!
     image: String
     author: User!
+    createdAt: String!
   }
   
   type Status {
