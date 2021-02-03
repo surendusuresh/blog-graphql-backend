@@ -4,10 +4,7 @@ const { AuthenticationError } = require("apollo-server");
 
 module.exports = {
   Query: {
-    user: async (parent, { id }, { models: { userModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError("You are not authenticated");
-      }
+    user: async (parent, { id }, { models: { userModel } }, info) => {      
       const user = await userModel.findById({ _id: id }).exec();
       return user;
     },
@@ -30,7 +27,7 @@ module.exports = {
       }
 
       const token = jwt.sign({ id: user.id }, "riddlemethis", {
-        expiresIn: 24 * 10 * 50,
+        expiresIn: '12h',
       });
 
       return {
@@ -41,11 +38,11 @@ module.exports = {
   Mutation: {
     createUser: async (
       parent,
-      { name, email, password },
+      { name, email, password, description, location, company },
       { models: { userModel } },
       info
     ) => {
-      const user = await userModel.create({ name, email, password });
+      const user = await userModel.create({ name, email, password, description, location, company });
       return user;
     },
     editUser: async (parent, { id, input }, {models: { userModel }, me}, info ) => {      

@@ -15,6 +15,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,    
+  },
+  company: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
+  }
 });
 
 userSchema.pre("save", function () {
